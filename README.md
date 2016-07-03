@@ -6,7 +6,7 @@ output: github_document
 
 [R Shiny](http://shiny.rstudio.com/) code for the [Online Algorithmic Complexity Calculator](http://complexitycalculator.com/) version 0.3 by the [Algorithmic Nature Group](http://algorithmicnaturelab.org/). 
 
-![alt text](./screenshot-1.png)
+![alt text](https://github.com/andandandand/OACC/edit/master/screeenshot-1.png
 
 To run this app locally, download [R Studio](https://www.rstudio.com/) and follow the instructions [here](http://shiny.rstudio.com/tutorial/lesson1/). 
 
