@@ -7,7 +7,9 @@
 To run this app locally, download [R Studio](https://www.rstudio.com/) and follow the instructions [here](http://shiny.rstudio.com/tutorial/lesson1/). 
 
 
-Our Block Decomposition Method to estimate [Kolmogorov complexity](http://www.scholarpedia.org/article/Algorithmic_complexity) in strings and graphs of arbitrary size is described in **A Divide-and-Conquer Method for Local Estimations of Algorithmic Complexity Lower Bounded by Shannon Entropy** by H. Zenil, F. Soler-Toscano, N.A. Kiani, S. Hernández-Orozco, and A. Rueda-Toicen.
+Our Block Decomposition Method to estimate [Kolmogorov complexity](http://www.scholarpedia.org/article/Algorithmic_complexity) in strings and graphs of arbitrary size is described in **A Divide-and-Conquer Method for Local Estimations of Algorithmic Complexity Lower Bounded by Shannon Entropy** by H. Zenil, F. Soler-Toscano, N.A. Kiani, S. Hernández-Orozco, and A. Rueda-Toicen. 
+
+If you make use of results from this calculator please make sure to properly cite our papers.
 
 This app extends work by Henrik Singmann and uses the [acss package](https://cran.r-project.org/web/packages/acss/index.html) available at CRAN.
 
