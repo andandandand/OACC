@@ -1,7 +1,5 @@
----
-title: "The Online Algorithmic Complexity Calculator - R Shiny App"
-output: github_document
----
+# The Online Algorithmic Complexity Calculator 
+##R Shiny App
 
 
 [R Shiny](http://shiny.rstudio.com/) code for the [Online Algorithmic Complexity Calculator](http://complexitycalculator.com/) version 0.3 by the [Algorithmic Nature Group](http://algorithmicnaturelab.org/). 
