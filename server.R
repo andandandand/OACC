@@ -2,6 +2,7 @@
 source("BDM-utils.R")
 source("loadGraph.R")
 source("BDM2D.R")
+source("compressionLength.R")
 
 shinyServer(function(input, output, session) {
   
@@ -22,25 +23,101 @@ shinyServer(function(input, output, session) {
         nchar(input$bdmInputString),
         ' and contains ',  
         countSymbols(input$bdmInputString), 
-        ' different symbols.' ))
+        ' different symbols. \n It has Shannon entropy = ', 
+        entropy(input$bdmInputString), 
+        ' and compressed length in bytes = ',
+        compressionLength(input$bdmInputString, "gzip"), 
+        ' (using gzip)'))
   })
   
+  ### CTM Tab
   output$resultCTM <- renderTable({
     input$goButtonCTM
     isolate({
-      z <- do.call(input$funct, 
-                   args = list(string = unlist(strsplit(input$ctmInputStrings, " ")),
-                               alphabet = as.numeric(input$ctmAlphabet)))
-      if (!is.matrix(z)){
-        z <- as.matrix(z)
-        colnames(z) <- paste0(input$funct, ": ", input$ctmAlphabet)
+      
+      if(input$funct == "entropy"){
+        strings <- unlist(strsplit(input$ctmInputStrings, " "))
+        z <- lapply(strings, entropy)
+        if (!is.matrix(z)) {
+          z <- as.matrix(z)
+          colnames(z) <- "Shannon entropy"
+          rownames(z) <- strings
+        }
       }
-    
+      
+      else if(input$funct == "entropy2"){
+        
+        strings <- unlist(strsplit(input$ctmInputStrings, " "))
+        z <- lapply(strings, entropy2)
+        if (!is.matrix(z)) {
+          z <- as.matrix(z)
+          colnames(z) <- "Second order entropy"
+          rownames(z) <- strings
+        }
+      }
+      
+      else if(input$funct == "compression-gzip"){
+        
+        strings <- unlist(strsplit(input$ctmInputStrings, " "))
+        
+        z <- lapply(strings,
+                    compressionLength,
+                    compressionType = "gzip")
+        
+        if (!is.matrix(z)) {
+          z <- as.matrix(z)
+          colnames(z) <- "Compression length (bytes)"
+          rownames(z) <- strings
+        } 
+        
+      }
+      
+      else if(input$funct == "compression-bzip2"){
+        
+        strings <- unlist(strsplit(input$ctmInputStrings, " "))
+        
+        z <- lapply(strings,
+                    compressionLength,
+                    compressionType = "bzip2")
+        
+        if (!is.matrix(z)) {
+          z <- as.matrix(z)
+          colnames(z) <- "Compression length (bytes)"
+          rownames(z) <- strings
+        } 
+        
+      }
+      
+      else if(input$funct == "compression-xz"){
+        
+        strings <- unlist(strsplit(input$ctmInputStrings, " "))
+        
+        z <- lapply(strings,
+                    compressionLength,
+                    compressionType = "xz")
+        
+        if (!is.matrix(z)) {
+          z <- as.matrix(z)
+          colnames(z) <- "Compression length (bytes)"
+          rownames(z) <- strings
+        } 
+        
+      }
+      
+      else{
+        z <- do.call(input$funct, 
+                     args = list(string = unlist(strsplit(input$ctmInputStrings, " ")),
+                                 alphabet = as.numeric(input$ctmAlphabet)))
+        if (!is.matrix(z)){
+          z <- as.matrix(z)
+          colnames(z) <- paste0(input$funct, ": ", input$ctmAlphabet)
+        }
+      }
     })
     z
   }, digits = 16)
   
-  #### BDM 1D
+  #### BDM 1D Tab
   output$resultBDM <- renderText({
     
     input$goButton
@@ -66,9 +143,9 @@ shinyServer(function(input, output, session) {
       } 
       else{
         
-        x <- paste0('Unnormalized K_BDM of the string ',
+        x <- paste0('Unnormalized K_BDM of the string \n',
                     input$bdmInputString ,
-                    ' with block size = ', 
+                    '\n with block size = ', 
                     input$blockSize,
                     ' and block overlap = ', 
                     input$blockOverlap,
@@ -85,7 +162,7 @@ shinyServer(function(input, output, session) {
     x
   })
   
-  #####BDM 2D
+  #####BDM 2D Tab
   loadedGraph <- reactive({
     
     inFile <- input$file1
@@ -128,11 +205,31 @@ shinyServer(function(input, output, session) {
                     bdm2D(loadedGraph(),
                           blockSize = as.numeric(input$bdm2DBlockSize),
                           offset = (as.numeric(input$bdm2DBlockSize) - 
-                                      as.numeric(input$bdm2DOverlap)) )
-        )
-      }
-      x
+                                      as.numeric(input$bdm2DOverlap)) ), 
+                    
+                    '.'
+                    )
+           }
+           x
+         })
     })
+    
+  output$result2DEntropyAndCompLength <- renderText({
+      
+      input$goButtonBDM2D
+      isolate({
+        
+        
+      
+          x <- paste0("The Shannon entropy of the adjacency matrix is ",
+                      entropy(toString(loadedGraph()))[[1]], 
+                      ", and its compressed length  is ", 
+                      compressionLength(toString(loadedGraph()), "gzip"),
+                      ' bytes (using gzip).'
+          )
+        
+        x
+      })
     
   })
   

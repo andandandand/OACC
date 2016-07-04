@@ -18,7 +18,7 @@ shinyUI(
                           
                           textInput(inputId = "bdmInputString",
                                     label = "Enter a string",
-                                    value ="CorrectHorseBatteryStaple",
+                                    value ="010101010101010101010101010101010101",
                                     width ="800px"),
                           
                           sliderInput(inputId = "blockSize",
@@ -40,7 +40,7 @@ shinyUI(
                                                       "6" = 6,
                                                       "9" = 9,
                                                       "256 (utf-8)" = 256),
-                                       selected = 256),
+                                       selected = 2),
                           
                           br(),
                           actionButton("goButton", "Evaluate")
@@ -81,7 +81,7 @@ shinyUI(
                         ) #end wellPanel BDM 2D
                ), #end tabPanel BDM 2D
                
-               tabPanel("ACSS",
+               tabPanel("CTM",
                         value = 3,
                         h3("Algorithmic Complexity for Short Strings"),
                         
@@ -95,7 +95,7 @@ shinyUI(
                           
                           ,
                           
-                          p("Evaluate the complexity of strings with length < 12. Use space to separate them."),
+                          p("Evaluate the complexity of strings with length < 13. Use space to separate them."),
                           
                           radioButtons(inputId = "ctmAlphabet",
                                        label = "Number of possible symbols", 
@@ -104,11 +104,16 @@ shinyUI(
                                        selected = 4), 
                           
                           selectInput("funct", 
-                                      label = "Functions used to evaluate the strings",
+                                      label = "Function used to evaluate the strings",
                                       choices = list("CTM Kolmogorov Complexity (K.alphabetSize) estimated by Algorithmic Probability (D.alphabetSize)" = "acss",
-                                                     "Likelihood of production by small Turing machines" = "likelihood_d"
-                                                     ,"Likelihood ratio in Turing machine distribution" = "likelihood_ratio",
-                                                     "Conditional Probability of random appearance" = "prob_random"
+                                                     "Shannon entropy" = "entropy",
+                                                     "Second order entropy" = "entropy2",
+                                                     "Compression length by gzip"="compression-gzip",
+                                                     "Compression length by bzip2" = "compression-bzip2",
+                                                     "Compression length by xz" = "compression-xz",
+                                                     "Likelihood of production by Turing machines (deterministic process)" = "likelihood_d",
+                                                     "Likelihood of production by Turing machines (random process)" = "likelihood_ratio",
+                                                     "Conditional probability of random appearance" = "prob_random"
                                       ), 
                                       selected = "acss"),
                           
@@ -134,15 +139,17 @@ shinyUI(
         ),
         conditionalPanel(condition="input.conditionedPanels==2",
                          h3("Result of 2D BDM Evaluation"),
-                         tableOutput("loadedGraph")
-                         ,textOutput("resultBDM2D"),
-                         
+                         tableOutput("loadedGraph"),
+                         textOutput("resultBDM2D"),
+                         br(),
+                         textOutput("result2DEntropyAndCompLength"),
                          br(),
                          HTML("<p><strong> \\(K_{BDM} =
                               \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)\\) </strong></p>")
         ), 
         conditionalPanel(condition="input.conditionedPanels==3",
-                         tableOutput("resultCTM"), br(),
+                         tableOutput("resultCTM"), 
+                         br(),
                          
                          HTML("<p><strong>\\(CTM~\\)\\(K_{alphabetSize} =
                               -log_{2}(D_{alphabetSize})\\) </strong></p>"),
