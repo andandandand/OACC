@@ -26,17 +26,18 @@ threeByThreeCTM$square <- NULL
 ##split matrices in blocks
 require(purrr)
 ind <- function(matDim, blockSize, offset) {
-  Map(`:`, seq(1, matDim-blockSize+1, by = offset), seq(blockSize, matDim, by = offset))
+  Map(`:`, seq(1, matDim - blockSize + 1, by = offset),
+      seq(blockSize, matDim, by = offset))
 }
 
 # this is a little helper function that generates subset index according to dimension of the 
 # matrix, the first sequence construct the starting point of the subset index with an interval 
 # of offset while the second sequence construct the ending point of the subset index
-# use Map to construct vector from start to end which in OP's case will be 1:3 and 2:4. 
+# use Map to construct vector from start to end  
 
 myPartition <- function(mat, blockSize, offset) {
-  lapply(cross2(ind(nrow(mat),blockSize,offset), 
-                ind(ncol(mat),blockSize,offset)), 
+  lapply(cross2(ind(nrow(mat), blockSize, offset), 
+                ind(ncol(mat), blockSize, offset)), 
          function(i) mat[i[[1]], i[[2]]])
 }
 

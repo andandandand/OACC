@@ -2,10 +2,6 @@
 
 library(acss)
 
-# http://stackoverflow.com/questions/13672720/r-command-for-setting-working-directory-to-source-file-location
-# set wd to this file location
-#this.dir <- dirname(parent.frame(2)$ofile)
-#setwd(this.dir)
 
 maxKs <- read.csv("./maxKs.csv")
 
@@ -13,7 +9,7 @@ countSymbols <- function(string){
   return(length(table(strsplit(string, NULL))))
 }
 
-#http://stackoverflow.com/a/12088263/45963
+
 number2binary <- function(number, noBits) {
   binary_vector = rev(as.numeric(intToBits(number)))
   if(missing(noBits)) {
@@ -29,7 +25,6 @@ getBinString <-function(string) {
   bitList2 <- lapply(bitList, paste0, collapse="")
   binString <- paste0(bitList2, collapse="")
   return (binString)
-  
 }
 
 splitString <- function(string, blockSize, offset){
@@ -71,7 +66,6 @@ splitString <- function(string, blockSize, offset){
 
 stringBDM <- function (stringsVector, base) {
   
-  
   #tally blocks
   stringCounts <- table(stringsVector)
   
@@ -85,26 +79,8 @@ stringBDM <- function (stringsVector, base) {
   return(bdm)  
 }
 
-#uses acss_data and assigns max complexity to NAs
-# test with "000110100111" and "111001011000"
-stringBDMv2 <- function (stringsVector, base) {
-  
-  #StackOverflow question: getting the index of NA elements in a vectorized function
-  
-  #tally blocks
-  stringCounts <- table(stringsVector)
-  
-  counts <- as.data.frame(stringCounts)[,2]
-  
-  #complexities
-  ks     <- acss(names(stringCounts), base)[,1]
-  
-  bdm <- sum(log2(counts) + ks)
-  
-  return(bdm)  
-}
 
-#should return NA
-stringBDMv2(c("000110100111","111001011000", "0110"),2)
 
+#test --should return NA
+stringBDM(c("000110100111","111001011000", "0110"),2)
 
