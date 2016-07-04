@@ -105,7 +105,7 @@ shinyUI(
                           
                           selectInput("funct", 
                                       label = "Function used to evaluate the strings",
-                                      choices = list("CTM Kolmogorov Complexity (K.alphabetSize) estimated by Algorithmic Probability (D.alphabetSize)" = "acss",
+                                      choices = list("CTM Kolmogorov complexity estimated by algorithmic probability " = "acss",
                                                      "Shannon entropy" = "entropy",
                                                      "Second order entropy" = "entropy2",
                                                      "Compression length by gzip"="compression-gzip",
