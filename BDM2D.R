@@ -32,7 +32,7 @@ ind <- function(matDim, blockSize, offset) {
 # this is a little helper function that generates subset index according to dimension of the 
 # matrix, the first sequence construct the starting point of the subset index with an interval 
 # of offset while the second sequence construct the ending point of the subset index
-# use Map to construct vector from start to end which in OP's case will be 1:3 and 2:4. 
+# use Map to construct vector from start to end. 
 
 myPartition <- function(mat, blockSize, offset) {
   lapply(cross2(ind(nrow(mat),blockSize,offset), 
@@ -58,11 +58,11 @@ bdm2D <- function(mat, blockSize, offset){
   squaresTally$flatSquares <- NULL
   
   if(blockSize == 4){
-    bdm <- sum(fourByFourCTM[rownames(squaresTally),]) 
-      + sum(log2(squaresTally$Freq))
+    bdm <- (sum(fourByFourCTM[rownames(squaresTally),]) 
+      + sum(log2(squaresTally$Freq)))
   } else{
-    bdm <- sum(threeByThreeCTM[rownames(squaresTally),]) 
-      + sum(log2(squaresTally$Freq))
+    bdm <- (sum(threeByThreeCTM[rownames(squaresTally),]) 
+      + sum(log2(squaresTally$Freq)))
   }
   
   return(bdm)
