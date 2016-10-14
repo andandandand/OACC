@@ -25,7 +25,7 @@ shinyServer(function(input, output, session) {
         countSymbols(input$bdmInputString), 
         ' different symbols. \n It has Shannon entropy = ', 
         entropy(input$bdmInputString), 
-        ' and compressed length in bytes = ',
+        ' bit(s), and compressed length in bytes = ',
         compressionLength(input$bdmInputString, "gzip"), 
         ' (using gzip)'))
   })
@@ -126,7 +126,7 @@ shinyServer(function(input, output, session) {
         
         binString <- getBinString(input$bdmInputString)
         
-        x <- paste0('Unnormalized K_BDM of the string `',
+        x <- paste0('Unnormalized BDM of the string `',
                     input$bdmInputString ,
                     '` \n with block size = ', 
                     input$blockSize,
@@ -138,12 +138,12 @@ shinyServer(function(input, output, session) {
                         binString,
                         blockSize = input$blockSize, 
                         offset = input$blockSize -input$blockOverlap),
-                      base = 2)
+                      base = 2), " bit(s)"
         )
       } 
       else{
         
-        x <- paste0('Unnormalized K_BDM of the string \n',
+        x <- paste0('Unnormalized BDM of the string \n',
                     input$bdmInputString ,
                     '\n with block size = ', 
                     input$blockSize,
@@ -155,7 +155,7 @@ shinyServer(function(input, output, session) {
                     stringBDM(splitString(input$bdmInputString, 
                                           blockSize=input$blockSize, 
                                           offset= input$blockSize - input$blockOverlap), 
-                              as.numeric(input$bdmAlphabet))
+                              as.numeric(input$bdmAlphabet)), ' bit(s)' 
         )
       }
     }) #end isolate()
@@ -194,7 +194,7 @@ shinyServer(function(input, output, session) {
         x <- "The maximum possible overlap is block size - 1."
       }
       else{
-        x <- paste0('Unnormalized K_BDM of the evaluated adjacency matrix considering ',
+        x <- paste0('Unnormalized BDM of the evaluated adjacency matrix considering ',
                     input$bdm2DBlockSize, ' x ', 
                     input$bdm2DBlockSize, 
                     " blocks, with overlap of ", 
@@ -207,7 +207,7 @@ shinyServer(function(input, output, session) {
                           offset = (as.numeric(input$bdm2DBlockSize) - 
                                       as.numeric(input$bdm2DOverlap)) ), 
                     
-                    '.'
+                    ' bit(s).'
                     )
            }
            x
@@ -223,7 +223,7 @@ shinyServer(function(input, output, session) {
       
           x <- paste0("The Shannon entropy of the adjacency matrix is ",
                       entropy(toString(loadedGraph()))[[1]], 
-                      ", and its compressed length  is ", 
+                      " bit(s), and its compressed length  is ", 
                       compressionLength(toString(loadedGraph()), "gzip"),
                       ' bytes (using gzip).'
           )

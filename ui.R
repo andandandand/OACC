@@ -23,7 +23,7 @@ shinyUI(
                           
                           sliderInput(inputId = "blockSize",
                                       label = "Block size",
-                                      min = 2, max = 12, value = 8, step = 1),
+                                      min = 2, max = 12, value = 12, step = 1),
                           
                           #max becomes the current value of blockSize -1
                           #dynamically
