@@ -80,7 +80,8 @@ stringBDM <- function (stringsVector, base) {
   
   naLengths <- unlist(lapply(naStrings, nchar))
   
-  naKs <- maxKs[naLengths, paste0("K.", toString(base))]
+  # more complex (+1) than the highest known values 
+  naKs <- maxKs[naLengths, paste0("K.", toString(base))] + 1
   
   stringCounts[is.na(stringCounts)] <- naKs
   
@@ -90,8 +91,8 @@ stringBDM <- function (stringsVector, base) {
   
 }
 
-## should print 85.535
-#test <- stringBDM(c("000110100111","111001011000", "0110"),2)
-#test
+## should print 76.12, when using Max(K) + 1
+test <- stringBDM(c("000110100111","111001011000"),2)
+test
 
 
