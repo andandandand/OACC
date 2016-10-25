@@ -74,7 +74,7 @@ stringBDM <- function (stringsVector, base) {
   
   stringCounts["ks"] <- acss(as.vector(stringCounts[["stringsVector"]]), base)[, 1]
   
-  naIndices <- as.integer(which(is.na(ks)))
+  naIndices <- as.integer(which(is.na(stringCounts$ks)))
   
   naStrings <- as.vector(stringCounts$stringsVector[naIndices])
   
