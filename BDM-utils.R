@@ -91,8 +91,8 @@ stringBDM <- function (stringsVector, base) {
   
 }
 
-## should print 76.12, when using Max(K) + 1
-test <- stringBDM(c("000110100111","111001011000"),2)
-test
+## should print 76.12
+#test <- stringBDM(c("000110100111","111001011000"),2)
+#test
 
 
