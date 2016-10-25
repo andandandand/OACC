@@ -134,7 +134,7 @@ shinyUI(
                          textOutput("symbolCount"),
                         
                          br(),
-                         HTML("<p><strong> \\(K_{BDM} =
+                         HTML("<p><strong> \\(BDM =
                               \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)\\) </strong></p>")
         ),
         conditionalPanel(condition="input.conditionedPanels==2",
