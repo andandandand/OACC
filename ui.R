@@ -5,7 +5,6 @@ shinyUI(
     
     #titlePanel("The Online Algorithmic Complexity Calculator"),
     
-   
     sidebarLayout(
       
       column(6,
@@ -14,12 +13,14 @@ shinyUI(
                         value = 1, 
                         h3("Block Decomposition Method for Strings"),
                        
-                        wellPanel( 
+                        div(wellPanel( 
                           
                           textInput(inputId = "bdmInputString",
                                     label = "Enter a string",
                                     value ="010101010101010101010101010101010101",
                                     width ="800px"),
+                          
+                          tags$head(tags$style("#bdmInputString{font-size: 16px}")),
                           
                           sliderInput(inputId = "blockSize",
                                       label = "Block size",
@@ -43,9 +44,9 @@ shinyUI(
                                        selected = 2),
                           
                           br(),
-                          actionButton("goButton", "Evaluate")
+                          actionButton("goButtonBDM1D", "Evaluate")
                           
-                        )
+                        ), style="font-size:110%")
                         
                ), 
                
@@ -95,7 +96,9 @@ shinyUI(
                           
                           ,
                           
-                          p("Evaluate the complexity of strings with length < 13. Use space to separate them."),
+                          p("Use space to separate strings."),
+                          p("Their length must be lower than 13 characters."),
+                          tags$head(tags$style(".p{font-size: 16px}")),
                           
                           radioButtons(inputId = "ctmAlphabet",
                                        label = "Number of possible symbols", 
@@ -129,27 +132,39 @@ shinyUI(
         withMathJax(),
         conditionalPanel(condition="input.conditionedPanels==1",
                          h3("Result of BDM Evaluation"),
-                         textOutput("resultBDM"),
+                         #textOutput("resultBDM"),
                          br(),
-                         textOutput("symbolCount"),
-                        
+                         p(textOutput("evaluatedString")),
+                         tags$head(tags$style("#evaluatedString{font-size: 16px}")),
                          br(),
+                         div(tableOutput("resultBDMTable"), style="font-size:110%"),
+                         tags$head(tags$style("#resultBDMTable{font-size: 16px}")),
+                         #textOutput("symbolCount"),
+                         hr(),
                          HTML("<p><strong> \\(BDM =
-                              \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)\\) </strong></p>")
+                              \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)\\) </strong></p>"), 
+                         hr(),
+                         p("Strings that don't appear in the \\(D_{alphabetSize }\\) distribution have their \\(CTM\\) value estimated as \\( Max(CTM_{alphabetSize}) + 1 \\)")
         ),
         conditionalPanel(condition="input.conditionedPanels==2",
-                         h3("Result of 2D BDM Evaluation"),
+                         h3("Adjacency Matrix"),
                          tableOutput("loadedGraph"),
-                         textOutput("resultBDM2D"),
+                         #textOutput("resultBDM2D"),
                          br(),
-                         textOutput("result2DEntropyAndCompLength"),
-                         br(),
+                         h3("Result of 2D BDM Evaluation"),
+                         tableOutput("resultBDM2DTable"),
+                         tags$head(tags$style("#resultBDM2DTable{font-size: 16px}")),
+                         hr(),
+                         #textOutput("result2DEntropyAndCompLength"),
+                         #br(),
                          HTML("<p><strong> \\(BDM =
                               \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)\\) </strong></p>")
         ), 
         conditionalPanel(condition="input.conditionedPanels==3",
-                         tableOutput("resultCTM"), 
+                         h3("Result of Evaluation"),
                          br(),
+                         div(tableOutput("resultCTM"), style = "font-size=110%"), 
+                         hr(),
                          
                          HTML("<p><strong>\\(CTM~\\)\\(K_{alphabetSize} =
                               -log_{2}(D_{alphabetSize})\\) </strong></p>"),
@@ -162,11 +177,11 @@ shinyUI(
                            which is the output frequency of the string 
                            by small Turing machines with the same alphabet size."),
                          
-                         br(),
-                         HTML("More information on the other complexity functions is available in the "),
+                         hr(),
+                         p(p("More information on the other complexity functions is available in the "),
                          a(href="https://cran.r-project.org/web/packages/acss/acss.pdf", 
                            "documentation of the ACSS package @ CRAN."))
-                         ) 
+                         )) 
       
       )
 ))

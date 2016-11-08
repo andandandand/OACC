@@ -13,6 +13,8 @@ shinyServer(function(input, output, session) {
                       max=input$blockSize-1)
   })
   
+   #called from ui.R
+  # to do: remember to remove the showing of symbolCount from ui.R
   output$symbolCount <- renderText({
     
     input$goButton
@@ -118,9 +120,80 @@ shinyServer(function(input, output, session) {
   }, digits = 16)
   
   #### BDM 1D Tab
+  
+  output$evaluatedString <- renderText({
+    
+    input$goButtonBDM1D
+    isolate({
+      x <- paste0("Evaluated string = \"", input$bdmInputString, "\"")
+    })
+     x
+  })
+  
+
+  
+  output$resultBDMTable <- renderTable({
+    
+   
+    input$goButtonBDM1D
+    isolate({
+      
+      values <- c ()
+      
+      #BDM 1D
+    
+      if (input$bdmAlphabet == 256){
+        
+        # convert UTF-8 strings to binary
+        binString <- getBinString(input$bdmInputString)
+        
+        values[1] <- paste0(
+          sprintf("%.4f",stringBDM(
+            splitString(binString,
+                        blockSize = input$blockSize, 
+                        offset = input$blockSize -input$blockOverlap),
+            base = 2)), 
+          " bits")
+        
+        
+      }
+      else {
+      values[1] <- paste0(
+                        sprintf("%.4f",stringBDM(
+                        splitString(input$bdmInputString,
+                                      blockSize = input$blockSize, 
+                                      offset = input$blockSize -input$blockOverlap),
+                                    base = input$bdmAlphabet)), 
+                        " bits")
+      }
+      #entropy
+      values[2] <- paste0(sprintf("%.4f",entropy(input$bdmInputString)), " bit(s)")
+      
+      #compression length
+      values[3] <- paste0(compressionLength(input$bdmInputString, "gzip") * 8, " bits")
+      
+      values[4] <- nchar(input$bdmInputString)
+      values[5] <- countSymbols(input$bdmInputString)
+      values[6] <- input$bdmAlphabet
+      values[7] <- input$blockSize
+      values[8] <- input$blockOverlap
+      result <- data.frame(values)
+      rownames(result) <- c("Unnormalized BDM", 
+                            "Shannon Entropy", 
+                            "Compression length (using gzip)",
+                            "String length",
+                            "# of symbols in string", 
+                            "# of symbols in CTM alphabet",
+                            "Block size",
+                            "Block overlap")
+      
+      
+    }) 
+    result}, rownames = TRUE, colnames = FALSE)
+  
   output$resultBDM <- renderText({
     
-    input$goButton
+    input$goButtonBDM1D
     isolate({
       if(countSymbols(input$bdmInputString) > 9 || input$bdmAlphabet == 256) { 
         
@@ -133,12 +206,12 @@ shinyServer(function(input, output, session) {
                     ' and block overlap = ', 
                     input$blockOverlap,
                     ', using a UTF-8 to binary conversion of the string is ', 
-                    stringBDM(
+                    sprintf("%.4f",stringBDM(
                       splitString(
                         binString,
                         blockSize = input$blockSize, 
                         offset = input$blockSize -input$blockOverlap),
-                      base = 2), " bit(s)"
+                      base = 2)), " bit(s)"
         )
       } 
       else{
@@ -184,6 +257,59 @@ shinyServer(function(input, output, session) {
     loadedGraph()
     
   })
+  
+  output$resultBDM2DTable <- renderTable({
+
+    input$goButtonBDM2D
+    isolate({
+      
+      #BDM2D
+      values <- c ()
+    
+      
+      values[1] <- paste0(
+        
+        sprintf("%.4f", bdm2D(loadedGraph(),
+              blockSize = as.numeric(input$bdm2DBlockSize),
+              offset = (as.numeric(input$bdm2DBlockSize) - 
+                          as.numeric(input$bdm2DOverlap)) )), 
+          " bits")
+
+      # Shannon entropy
+      values[2] <- paste0(sprintf("%.4f",entropy(toString(loadedGraph()))[[1]]), 
+                 " bit(s)")
+      
+      # compression length
+      values[3] <- paste0(compressionLength(toString(loadedGraph()), "gzip") * 8,
+                 " bits")
+      
+      # matrix dimensions
+      values[4] <- paste0(nrow(loadedGraph()), " x ", ncol(loadedGraph()))
+
+      # the number of symbols for the BDM2D alphabet is always 2
+      values[5] <- 2
+      
+      #2D block size
+      values[6] <- paste0(input$bdm2DBlockSize, " x ", input$bdm2DBlockSize)
+      
+      #2D block overlap
+      values[7] <- input$bdm2DOverlap
+      
+      result <- data.frame(values)
+      
+      rownames(result) <- c("Unnormalized BDM", 
+                            "Shannon Entropy", 
+                            "Compression length (using gzip)",
+                            "Matrix  dimensions",
+                      
+                            "# of symbols in CTM alphabet",
+                            "Block size",
+                            "Block overlap (both rows and columns)")
+      
+      
+    }) 
+    result}, rownames = TRUE, colnames = FALSE)
+  
   
   output$resultBDM2D <- renderText({
     

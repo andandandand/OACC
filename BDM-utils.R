@@ -3,28 +3,40 @@
 library(acss)
 
 
-maxKs <- read.csv("./maxKs.csv")
-maxKs$X <- NULL
+#maxKs <- read.csv("./maxKs.csv")
+#maxKs$X <- NULL
+
+maxKnownKs <- read.csv("./maxKnownKs.csv")
+maxKnownKs$X <- NULL
 
 countSymbols <- function(string){
   return(length(table(strsplit(string, NULL))))
 }
 
-
 number2binary <- function(number, noBits) {
+  
   binary_vector = rev(as.numeric(intToBits(number)))
+  
   if(missing(noBits)) {
-    return(binary_vector)
-  } else {
-    binary_vector[-(1:(length(binary_vector) - noBits))]
+  
+      return(binary_vector)
+  } 
+  else {
+  
+      binary_vector[-(1:(length(binary_vector) - noBits))]
   }
 }
 
 getBinString <-function(string) {
+  
   string <- utf8ToInt(string)
+
   bitList <- lapply(string, number2binary, noBits=8)
+  
   bitList2 <- lapply(bitList, paste0, collapse="")
+  
   binString <- paste0(bitList2, collapse="")
+  
   return (binString)
 }
 
@@ -81,8 +93,8 @@ stringBDM <- function (stringsVector, base) {
   naLengths <- unlist(lapply(naStrings, nchar))
   
   # more complex (+1) than the highest known values 
-  naKs <- maxKs[naLengths, paste0("K.", toString(base))] + 1
-  
+  naKs <- maxKnownKs[, paste0("K.", toString(base))] + 1
+    
   stringCounts[is.na(stringCounts)] <- naKs
   
   bdm <- sum(log2(stringCounts$Freq)) + sum(stringCounts$ks)
@@ -91,8 +103,8 @@ stringBDM <- function (stringsVector, base) {
   
 }
 
-## should print 76.12
-#test <- stringBDM(c("000110100111","111001011000"),2)
-#test
+# ## should print 80.12
+# test <- stringBDM(c("000110100111","111001011000"),2)
+# test
 
 
