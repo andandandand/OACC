@@ -13,8 +13,7 @@ shinyServer(function(input, output, session) {
                       max=input$blockSize-1)
   })
   
-   #called from ui.R
-  # to do: remember to remove the showing of symbolCount from ui.R
+  
   output$symbolCount <- renderText({
     
     input$goButton
