@@ -97,8 +97,8 @@ shinyUI(
                           ,
                           
                           p("Use space to separate strings."),
-                          p("Their length must be lower than 13 characters."),
-                          #tags$head(tags$style(".p{font-size: 16px}")),
+                          p("The length of each string must be lower than 13 characters."),
+                          
                           
                           radioButtons(inputId = "ctmAlphabet",
                                        label = "Number of possible symbols", 
@@ -134,15 +134,19 @@ shinyUI(
                          h3("Result of BDM Evaluation"),
               
                          br(),
-                         p(textOutput("evaluatedString")),
+                         div(p(textOutput("evaluatedString")), style="font-size:120%"),
                          br(),
                          div(tableOutput("resultBDMTable"), style="font-size:120%"),
                          hr(),
                          
-                        HTML("<p><strong> \\(BDM =
-                              \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)\\) </strong></p>"), 
+                         div(p("\\(BDM =
+                              \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)\\)"),
+                             style="font-size=120%"), 
+                         
                          hr(),
-                         p("Strings that don't appear in the \\(D_{alphabetSize }\\) distribution have their \\(CTM\\) value estimated as \\( Max(CTM_{alphabetSize}) + 1 \\)")
+                         div(p("Strings that don't appear in the \\(D_{alphabetSize }\\) distribution have
+                               their \\(CTM\\) value estimated as \\( Max(CTM_{alphabetSize}) + 1 \\)"),
+                             style="font-size=120%")
         ),
         conditionalPanel(condition="input.conditionedPanels==2",
                          h3("Adjacency Matrix"),
@@ -154,8 +158,9 @@ shinyUI(
 
                          hr(),
                          
-                         HTML("<p><strong> \\(BDM =
-                              \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)\\) </strong></p>")
+                         div(p("\\(BDM =
+                              \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)\\)"),
+                             style="font-size=120%")
         ), 
         conditionalPanel(condition="input.conditionedPanels==3",
                          h3("Result of Evaluation"),
@@ -163,12 +168,15 @@ shinyUI(
                          div(tableOutput("resultCTM"), style = "font-size=120%"), 
                          hr(),
                          
-                         HTML("<p><strong>\\(CTM~\\)\\(K_{alphabetSize} =
-                              -log_{2}(D_{alphabetSize})\\) </strong></p>"),
+                         div(p("\\(CTM~\\)\\(K_{alphabetSize} =
+                              -log_{2}(D_{alphabetSize})\\)"), style="font-size=120%"),
                          
+                         hr(),
                          
                          p("\\(CTM~\\)\\(K_{alphabetSize}\\)
                            indicates the estimated Kolmogorov complexity of the string by the Coding Theorem Method."),
+                          
+                         hr(),
                          
                          p("\\(D_{alphabetSize}\\) indicates the estimated algorithmic probability, 
                            which is the output frequency of the string 
@@ -177,9 +185,10 @@ shinyUI(
                          hr(),
                          p("Strings that don't appear in the \\(D_{alphabetSize }\\) 
                            distribution have their \\(CTM\\) value estimated as \\( Max(CTM_{alphabetSize}) + 1 \\)"),
-                         p(p("More information on the other complexity functions is available in the "),
+                         hr(),
+                         div(p(p("More information on the other complexity functions is available in the "),
                          a(href="https://cran.r-project.org/web/packages/acss/acss.pdf", 
-                           "documentation of the ACSS package @ CRAN."))
+                           "documentation of the ACSS package @ CRAN.")), style="font-size=120%")
                          )) 
       
       )
