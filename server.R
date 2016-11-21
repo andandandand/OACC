@@ -177,7 +177,7 @@ shinyServer(function(input, output, session) {
       values[7] <- input$blockSize
       values[8] <- input$blockOverlap
       result <- data.frame(values)
-      rownames(result) <- c("Unnormalized BDM", 
+      rownames(result) <- c("BDM", 
                             "Shannon Entropy", 
                             "Compression length (using gzip)",
                             "String length",
@@ -198,7 +198,7 @@ shinyServer(function(input, output, session) {
         
         binString <- getBinString(input$bdmInputString)
         
-        x <- paste0('Unnormalized BDM of the string `',
+        x <- paste0('BDM of the string `',
                     input$bdmInputString ,
                     '` \n with block size = ', 
                     input$blockSize,
@@ -215,7 +215,7 @@ shinyServer(function(input, output, session) {
       } 
       else{
         
-        x <- paste0('Unnormalized BDM of the string \n',
+        x <- paste0('BDM of the string \n',
                     input$bdmInputString ,
                     '\n with block size = ', 
                     input$blockSize,
@@ -296,7 +296,7 @@ shinyServer(function(input, output, session) {
       
       result <- data.frame(values)
       
-      rownames(result) <- c("Unnormalized BDM", 
+      rownames(result) <- c("BDM", 
                             "Shannon Entropy", 
                             "Compression length (using gzip)",
                             "Matrix  dimensions",
@@ -319,7 +319,7 @@ shinyServer(function(input, output, session) {
         x <- "The maximum possible overlap is block size - 1."
       }
       else{
-        x <- paste0('Unnormalized BDM of the evaluated adjacency matrix considering ',
+        x <- paste0('BDM of the evaluated adjacency matrix considering ',
                     input$bdm2DBlockSize, ' x ', 
                     input$bdm2DBlockSize, 
                     " blocks, with overlap of ", 
