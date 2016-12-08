@@ -174,7 +174,9 @@ shinyUI(
         
         conditionalPanel(condition="input.conditionedPanels==2",
                          br(),
+                         
                          h3("Adjacency Matrix"),
+                         
                          div(tableOutput("loadedGraph"), align="center", style="font-size: 110%"),
                          
                          br(),
