@@ -10,7 +10,9 @@ shinyUI(
       column(6,
              tabsetPanel(
                tabPanel("BDM 1D",
+                        
                         value = 1, 
+                        
                         h3("Block Decomposition Method for Strings"),
                        
                         div(wellPanel( 
@@ -46,7 +48,7 @@ shinyUI(
                           br(),
                           actionButton("goButtonBDM1D", "Evaluate")
                           
-                        ), style="font-size:110%")
+                        ), style="font-size:115%")
                         
                ), 
                
@@ -54,7 +56,7 @@ shinyUI(
                         value = 2,
                         h3(
                           "Block Decomposition Method for Unweighted Graphs"), 
-                        wellPanel(
+                        div(wellPanel(
                           fileInput(inputId = 'file1',
                                     label = "Choose a CSV file",
                                     accept = c('text/comma-separated-values', 
@@ -80,13 +82,14 @@ shinyUI(
                                     
                           
                         ) #end wellPanel BDM 2D
+                        , style="font-size: 115%")
                ), #end tabPanel BDM 2D
                
                tabPanel("CTM",
                         value = 3,
                         h3("Algorithmic Complexity for Short Strings"),
                         
-                        wellPanel(
+                        div(wellPanel(
                           
                           
                           textInput(inputId = "ctmInputStrings",
@@ -97,7 +100,7 @@ shinyUI(
                           ,
                           
                           p("Use space to separate strings."),
-                          p("The length of each string must be lower than 13 characters."),
+                          p("The length of each string must be shorter than 13 characters."),
                           
                           
                           radioButtons(inputId = "ctmAlphabet",
@@ -123,7 +126,8 @@ shinyUI(
                           
                           actionButton("goButtonCTM", "Evaluate")
                           
-                        )), # end wellPanel
+                        )), # end wellPanel, 
+                        style="font-size:115%"),
                id = "conditionedPanels"
              )
       ),
@@ -131,65 +135,109 @@ shinyUI(
       mainPanel(
         withMathJax(),
         conditionalPanel(condition="input.conditionedPanels==1",
+                         
+                         br(),
+                         
                          h3("Result of BDM Evaluation"),
               
                          br(),
-                         div(p(textOutput("evaluatedString")), style="font-size:120%"),
+                         
+                         div(p(textOutput("evaluatedString")), 
+                             style="font-size:120%", 
+                             align="center"),
+                         
                          br(),
-                         div(tableOutput("resultBDMTable"), style="font-size:120%"),
+                         
+                         div(tableOutput("resultBDMTable"), 
+                             style="font-size : 120%; 
+                             font-family: Arial, Helvetica, sans-serif;", 
+                             align="center"),
+                         
                          hr(),
                          
-                         div(p("\\(BDM =
-                              \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)\\)"),
-                             style="font-size=120%"), 
+                         div(p("$$\\textit{BDM} =
+                              \\sum_{i=1}^{n} \\textit{CTM}(\\textit{block}_{i})
+                               +\\textit{log}_{2}(|\\textit{block}_{i}|)$$"),
+                             style="font-size: 120%",
+                             align="center"), 
                          
                          hr(),
-                         div(p("Strings that don't appear in the \\(D_{alphabetSize }\\) distribution have
-                               their \\(CTM\\) value estimated as \\( Max(CTM_{alphabetSize}) + 1 \\)"),
-                             style="font-size=120%")
-        ),
+                         
+                        div(p("Strings that don't appear in the 
+                              \\(D_{\\textit{alphabetSize}}\\) distribution have
+                              their \\(\\textit{CTM}\\) value estimated as"),
+                            style ="font-size: 110%;", align = "center"),
+                         
+                         div(p("\\( \\textit{Max}(\\textit{CTM}_{\\textit{alphabetSize}}) + 1 \\)"),
+                             style="font-size: 120%", align="center" )
+        ), ##end BDM 1D tab
+        
         conditionalPanel(condition="input.conditionedPanels==2",
+                         br(),
                          h3("Adjacency Matrix"),
-                         tableOutput("loadedGraph"),
+                         div(tableOutput("loadedGraph"), align="center", style="font-size: 110%"),
                          
                          br(),
                          h3("Result of 2D BDM Evaluation"),
-                         div(tableOutput("resultBDM2DTable"), style="font-size=120%"),
+                         div(tableOutput("resultBDM2DTable"), style="font-size: 120%", align="center"),
 
                          hr(),
                          
-                         div(p("\\(BDM =
-                              \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)\\)"),
-                             style="font-size=120%")
-        ), 
-        conditionalPanel(condition="input.conditionedPanels==3",
+                         div(p("$$BDM =
+                              \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)$$"),
+                             style ="font-size: 120%")
+        ), ##end BDM 2D tab
+        
+        conditionalPanel(condition ="input.conditionedPanels==3",
+                         br(),
                          h3("Result of Evaluation"),
                          br(),
-                         div(tableOutput("resultCTM"), style = "font-size=120%"), 
+                         div(tableOutput("resultCTM"), 
+                             style = "font-size: 120%", 
+                             align = "center"), 
                          hr(),
                          
-                         div(p("\\(CTM~\\)\\(K_{alphabetSize} =
-                              -log_{2}(D_{alphabetSize})\\)"), style="font-size=120%"),
+                         div(p("$$\\textit{CTM} = K_{\\textit{alphabetSize}} =
+                              -log_{2}(D_{\\textit{alphabetSize}})$$"), 
+                             style = "font-size: 120%"),
                          
                          hr(),
                          
-                         p("\\(CTM~\\)\\(K_{alphabetSize}\\)
-                           indicates the estimated Kolmogorov complexity of the string by the Coding Theorem Method."),
+                        div(p("\\(CTM~\\)\\(K_{\\textit{alphabetSize}}\\)
+                           indicates the estimated Kolmogorov complexity of 
+                           the string by the Coding Theorem Method."),
+                            style="font-size:110%"),
                           
                          hr(),
                          
-                         p("\\(D_{alphabetSize}\\) indicates the estimated algorithmic probability, 
-                           which is the output frequency of the string 
+                         div(p("\\(D_{\\textit{alphabetSize}}\\) indicates the 
+                          estimated algorithmic probability, 
+                          which is the output frequency of the string 
                            by small Turing machines with the same alphabet size."),
+                             style="font-size:110%"),
                          
                          hr(),
-                         p("Strings that don't appear in the \\(D_{alphabetSize }\\) 
-                           distribution have their \\(CTM\\) value estimated as \\( Max(CTM_{alphabetSize}) + 1 \\)"),
+                         
+                         div(p("Strings that don't appear in the
+                            \\(D_{\\textit{alphabetSize}}\\) 
+                           distribution have their
+                           \\(\\textit{CTM}\\) value estimated as"),
+                             style="font-size:110%"),
+                         
+                         div(p("$$ \\textit{Max}(\\textit{CTM}_{\\textit{alphabetSize}})
+                           + 1 $$"), 
+                             style="font-size:110%"),
                          hr(),
-                         div(p(p("More information on the other complexity functions is available in the "),
+                         
+                         div(p("More information on the other complexity 
+                               functions is available in the ",
                          a(href="https://cran.r-project.org/web/packages/acss/acss.pdf", 
-                           "documentation of the ACSS package @ CRAN.")), style="font-size=120%")
-                         )) 
+                           "documentation of the ACSS package @ CRAN.")),
+                         style="font-size:110%", align="center")
+                         
+                        ) ##end CTM tab
+        
+        ) ## end mainPanel 
       
       )
 ))

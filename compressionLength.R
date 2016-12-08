@@ -4,8 +4,8 @@ compressionLength <- function(string, compressionType){
 }
 
 ## https://en.wikipedia.org/wiki/Gzip
-# g <- compressionLength("0101010101010101", "gzip")
-# g
+#g <- compressionLength("0101010101010101", "gzip")
+#g
 
 ## https://en.wikipedia.org/wiki/Bzip2 
 # b <- compressionLength("0101010101010101", "bzip")
