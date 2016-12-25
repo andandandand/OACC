@@ -9,7 +9,7 @@ shinyUI(
       
       column(6,
              tabsetPanel(
-               tabPanel("BDM 1D",
+               tabPanel("For any string",
                         
                         value = 1, 
                         
@@ -35,7 +35,7 @@ shinyUI(
                                       min = 0, max = 11, value = 0, step = 1),
                           
                           radioButtons(inputId = "bdmAlphabet",
-                                       label = "Number of possible symbols",
+                                       label = "Alphabet size",
                                        inline = TRUE,
                                        choices = list("2" = 2,
                                                       "4" = 4,
@@ -52,10 +52,10 @@ shinyUI(
                         
                ), 
                
-               tabPanel("BDM 2D",
+               tabPanel("For binary arrays",
                         value = 2,
                         h3(
-                          "Block Decomposition Method for Unweighted Graphs"), 
+                          "Block Decomposition Method for Unweighted Adjacency Matrices"), 
                         div(wellPanel(
                           fileInput(inputId = 'file1',
                                     label = "Choose a CSV file",
@@ -85,7 +85,7 @@ shinyUI(
                         , style="font-size: 115%")
                ), #end tabPanel BDM 2D
                
-               tabPanel("CTM",
+               tabPanel("For short strings",
                         value = 3,
                         h3("Algorithmic Complexity for Short Strings"),
                         
@@ -104,7 +104,7 @@ shinyUI(
                           
                           
                           radioButtons(inputId = "ctmAlphabet",
-                                       label = "Number of possible symbols", 
+                                       label = "Alphabet size", 
                                        inline = TRUE,
                                        choices = list("2" = 2, "4" = 4, "5" = 5, "6" = 6, "9" = 9),
                                        selected = 4), 
@@ -138,7 +138,7 @@ shinyUI(
                          
                          br(),
                          
-                         h3("Result of BDM Evaluation"),
+                         h3("Result of Evaluation"),
               
                          br(),
                          
@@ -180,7 +180,7 @@ shinyUI(
                          div(tableOutput("loadedGraph"), align="center", style="font-size: 110%"),
                          
                          br(),
-                         h3("Result of 2D BDM Evaluation"),
+                         h3("Result of Evaluation"),
                          div(tableOutput("resultBDM2DTable"), style="font-size: 120%", align="center"),
 
                          hr(),
