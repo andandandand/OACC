@@ -87,7 +87,7 @@ shinyUI(
                
                tabPanel("For short strings",
                         value = 3,
-                        h3("Algorithmic Complexity for Short Strings"),
+                        h3("Algorithmic Complexity of Short Strings"),
                         
                         div(wellPanel(
                           
