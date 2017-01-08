@@ -1,4 +1,4 @@
-# The Online Algorithmic Complexity Calculator v1.0
+# The Online Algorithmic Complexity Calculator v2.0
 ##R Shiny App
 
 

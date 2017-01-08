@@ -147,7 +147,7 @@ shinyServer(function(input, output, session) {
         binString <- getBinString(input$bdmInputString)
         
         values[1] <- paste0(
-          sprintf("%.4f",stringBDM(
+          sprintf("%.2f",stringBDM(
             splitString(binString,
                         blockSize = input$blockSize, 
                         offset = input$blockSize -input$blockOverlap),
@@ -158,7 +158,7 @@ shinyServer(function(input, output, session) {
       }
       else {
       values[1] <- paste0(
-                        sprintf("%.4f",stringBDM(
+                        sprintf("%.2f",stringBDM(
                         splitString(input$bdmInputString,
                                       blockSize = input$blockSize, 
                                       offset = input$blockSize -input$blockOverlap),
@@ -166,7 +166,7 @@ shinyServer(function(input, output, session) {
                         " bits")
       }
       #entropy
-      values[2] <- paste0(sprintf("%.4f",entropy(input$bdmInputString)), " bit(s)")
+      values[2] <- paste0(sprintf("%.2f",entropy(input$bdmInputString)), " bit(s)")
       
       #compression length
       values[3] <- paste0(compressionLength(input$bdmInputString, "gzip") * 8, " bits")
@@ -205,7 +205,7 @@ shinyServer(function(input, output, session) {
                     ' and block overlap = ', 
                     input$blockOverlap,
                     ', using a UTF-8 to binary conversion of the string is ', 
-                    sprintf("%.4f",stringBDM(
+                    sprintf("%.2f",stringBDM(
                       splitString(
                         binString,
                         blockSize = input$blockSize, 
@@ -268,14 +268,14 @@ shinyServer(function(input, output, session) {
       
       values[1] <- paste0(
         
-        sprintf("%.4f", bdm2D(loadedGraph(),
+        sprintf("%.2f", bdm2D(loadedGraph(),
               blockSize = as.numeric(input$bdm2DBlockSize),
               offset = (as.numeric(input$bdm2DBlockSize) - 
                           as.numeric(input$bdm2DOverlap)) )), 
           " bits")
 
       # Shannon entropy
-      values[2] <- paste0(sprintf("%.4f",entropy(toString(loadedGraph()))[[1]]), 
+      values[2] <- paste0(sprintf("%.2f",entropy(toString(loadedGraph()))[[1]]), 
                  " bit(s)")
       
       # compression length
