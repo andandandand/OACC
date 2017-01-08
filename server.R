@@ -130,7 +130,7 @@ shinyServer(function(input, output, session) {
   })
   
 
-  
+  #BDM 1D table of results
   output$resultBDMTable <- renderTable({
     
    
@@ -138,8 +138,6 @@ shinyServer(function(input, output, session) {
     isolate({
       
       values <- c ()
-      
-      #BDM 1D
     
       if (input$bdmAlphabet == 256){
         
@@ -188,51 +186,9 @@ shinyServer(function(input, output, session) {
       
       
     }) 
-    result}, rownames = TRUE, colnames = FALSE)
+    result}, 
+    rownames = TRUE, colnames = FALSE)
   
-  output$resultBDM <- renderText({
-    
-    input$goButtonBDM1D
-    isolate({
-      if(countSymbols(input$bdmInputString) > 9 || input$bdmAlphabet == 256) { 
-        
-        binString <- getBinString(input$bdmInputString)
-        
-        x <- paste0('BDM of the string `',
-                    input$bdmInputString ,
-                    '` \n with block size = ', 
-                    input$blockSize,
-                    ' and block overlap = ', 
-                    input$blockOverlap,
-                    ', using a UTF-8 to binary conversion of the string is ', 
-                    sprintf("%.2f",stringBDM(
-                      splitString(
-                        binString,
-                        blockSize = input$blockSize, 
-                        offset = input$blockSize -input$blockOverlap),
-                      base = 2)), " bit(s)"
-        )
-      } 
-      else{
-        
-        x <- paste0('BDM of the string \n',
-                    input$bdmInputString ,
-                    '\n with block size = ', 
-                    input$blockSize,
-                    ' and block overlap = ', 
-                    input$blockOverlap,
-                    ', considering ',
-                    input$bdmAlphabet,
-                    ' possible symbols, is ', 
-                    stringBDM(splitString(input$bdmInputString, 
-                                          blockSize=input$blockSize, 
-                                          offset= input$blockSize - input$blockOverlap), 
-                              as.numeric(input$bdmAlphabet)), ' bit(s)' 
-        )
-      }
-    }) #end isolate()
-    x
-  })
   
   #####BDM 2D Tab
   loadedGraph <- reactive({
