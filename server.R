@@ -133,7 +133,6 @@ shinyServer(function(input, output, session) {
   #BDM 1D table of results
   output$resultBDMTable <- renderTable({
     
-   
     input$goButtonBDM1D
     isolate({
       
@@ -151,8 +150,6 @@ shinyServer(function(input, output, session) {
                         offset = input$blockSize -input$blockOverlap),
             base = 2)), 
           " bits")
-        
-        
       }
       else {
       values[1] <- paste0(
@@ -166,17 +163,23 @@ shinyServer(function(input, output, session) {
       #entropy
       values[2] <- paste0(sprintf("%.2f",entropy(input$bdmInputString)), " bit(s)")
       
-      #compression length
-      values[3] <- paste0(compressionLength(input$bdmInputString, "gzip") * 8, " bits")
+      #second order entropy
+      values[3] <- paste0(sprintf("%.2f",entropy2(input$bdmInputString)), " bit(s)")
       
-      values[4] <- nchar(input$bdmInputString)
-      values[5] <- countSymbols(input$bdmInputString)
-      values[6] <- input$bdmAlphabet
-      values[7] <- input$blockSize
-      values[8] <- input$blockOverlap
+      #compression length
+      values[4] <- paste0(compressionLength(input$bdmInputString, "gzip") * 8, " bits")
+      
+      values[5] <- nchar(input$bdmInputString)
+      values[6] <- countSymbols(input$bdmInputString)
+      values[7] <- input$bdmAlphabet
+      values[8] <- input$blockSize
+      values[9] <- input$blockOverlap
+      
       result <- data.frame(values)
+      
       rownames(result) <- c("BDM", 
-                            "Shannon Entropy", 
+                            "Shannon entropy", 
+                            "Second order entropy",
                             "Compression length (using gzip)",
                             "String length",
                             "# of symbols in string", 
@@ -253,7 +256,7 @@ shinyServer(function(input, output, session) {
       result <- data.frame(values)
       
       rownames(result) <- c("BDM", 
-                            "Shannon Entropy", 
+                            "Shannon entropy", 
                             "Compression length (using gzip)",
                             "Matrix  dimensions",
                       
