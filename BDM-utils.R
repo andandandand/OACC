@@ -2,10 +2,6 @@
 
 library(acss)
 
-
-#maxKs <- read.csv("./maxKs.csv")
-#maxKs$X <- NULL
-
 maxKnownKs <- read.csv("./maxKnownKs.csv")
 maxKnownKs$X <- NULL
 

@@ -226,26 +226,35 @@ shinyServer(function(input, output, session) {
     
       values[1] <- paste0(
         
-        sprintf("%.4f", bdm2D(loadedGraph(),
-              blockSize = as.numeric(input$bdm2DBlockSize),
-              offset = (as.numeric(input$bdm2DBlockSize) - 
-                          as.numeric(input$bdm2DOverlap)) )), 
-          " bits")
+                sprintf("%.4f", 
+                  bdm2D(loadedGraph(),
+                      blockSize = as.numeric(input$bdm2DBlockSize),
+                      offset = (as.numeric(input$bdm2DBlockSize) - 
+                                as.numeric(input$bdm2DOverlap)) )), 
+                   " bits")
 
       # Shannon entropy
-      values[2] <- paste0(sprintf("%.4f",entropy(toString(loadedGraph()))[[1]]), 
+      values[2] <- paste0(sprintf("%.4f",
+                                  entropy(toString(loadedGraph()))[[1]]), 
                  " bit(s)")
       
+      # Block entropy
+      values[3] <- paste0(
+        
+        sprintf("%.4f", blockEntropy(loadedGraph(),
+                              blockSize = as.numeric(input$bdm2DBlockSize),
+                              offset = (as.numeric(input$bdm2DBlockSize) - 
+                                          as.numeric(input$bdm2DOverlap)) )), 
+        " bits")
+      
       # compression length
-      values[3] <- paste0(compressionLength(toString(loadedGraph()), "gzip") * 8,
+      values[4] <- paste0(compressionLength(toString(loadedGraph()), "gzip") * 8,
                  " bits")
       
       # matrix dimensions
-      values[4] <- paste0(nrow(loadedGraph()), " x ", ncol(loadedGraph()))
+      values[5] <- paste0(nrow(loadedGraph()), " x ", ncol(loadedGraph()))
 
-      # the number of symbols for the BDM2D alphabet is always 2
-      values[5] <- 2
-      
+     
       #2D block size
       values[6] <- paste0(input$bdm2DBlockSize, " x ", input$bdm2DBlockSize)
       
@@ -255,11 +264,10 @@ shinyServer(function(input, output, session) {
       result <- data.frame(values)
       
       rownames(result) <- c("BDM", 
-                            "Shannon entropy", 
+                            "Shannon entropy",
+                            "Block entropy",
                             "Compression length (using gzip)",
                             "Matrix  dimensions",
-                      
-                            "# of symbols in CTM alphabet",
                             "Block size",
                             "Block overlap (both rows and columns)")
       

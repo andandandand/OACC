@@ -29,10 +29,9 @@ ind <- function(matDim, blockSize, offset) {
   Map(`:`, seq(1, matDim-blockSize+1, by = offset), seq(blockSize, matDim, by = offset))
 }
 
-# this is a little helper function that generates subset index according to dimension of the 
-# matrix, the first sequence construct the starting point of the subset index with an interval 
-# of offset while the second sequence construct the ending point of the subset index
-# use Map to construct vector from start to end. 
+# this is a helper function that generates subset indexing according to dimension of the 
+# matrix, the first sequence constructs the starting point of the subset index considering 
+# the offset while the second sequence constructs the ending point of the subset index
 
 myPartition <- function(mat, blockSize, offset) {
   lapply(cross2(ind(nrow(mat),blockSize,offset), 
@@ -43,6 +42,24 @@ myPartition <- function(mat, blockSize, offset) {
 #used to lookup entries in fourByFourCTM and threeByThreeCTM
 stringify <- function(smallBlock){
   paste0(c(t(smallBlock)), collapse ="")
+}
+
+blockEntropy <- function(mat, blockSize, offset){
+  
+  parts <- myPartition(mat, blockSize, offset)
+  
+  flatSquares <- unlist(lapply(parts, stringify))
+  
+  squaresTally <- as.data.frame(table(flatSquares))
+  
+  rownames(squaresTally) <- squaresTally$flatSquare
+  
+  squaresTally$flatSquares <- NULL
+  
+  probs = squaresTally[, 1]/nrow(squaresTally)
+  
+  return(-sum(probs*log2(probs)))
+  
 }
 
 bdm2D <- function(mat, blockSize, offset){
@@ -68,10 +85,6 @@ bdm2D <- function(mat, blockSize, offset){
   return(bdm)
 }
 
-#test
-# set.seed(42)
-# m88 <- apply(matrix(0, 8, 8), c(1,2), function(x) sample(c(0,1),1)) 
-# m88
 # 
 # set.seed(42)
 # m99 <- apply(matrix(0, 9, 9), c(1,2), function(x) sample(c(0,1),1)) 
@@ -83,3 +96,9 @@ bdm2D <- function(mat, blockSize, offset){
 # testResul2 <- bdm2D(m99, 3, 3)
 # testResul2
 
+#test
+library(acss)
+set.seed(42)
+m88 <- apply(matrix(0, 8, 8), c(1,2), function(x) sample(c(0,1),1)) 
+m88
+blockEntropy(m88, 4, 4)
