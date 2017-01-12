@@ -2,7 +2,7 @@
 ##R Shiny App
 
 
-[R Shiny](http://shiny.rstudio.com/) code for the [Online Algorithmic Complexity Calculator](http://complexitycalculator.com/) version 1.0 by the [Algorithmic Nature Group](http://algorithmicnaturelab.org/). 
+[R Shiny](http://shiny.rstudio.com/) code for the [Online Algorithmic Complexity Calculator](http://complexitycalculator.com/) version 2.0 by the [Algorithmic Nature Group](http://algorithmicnaturelab.org/). 
 
 To run this app locally, download [R Studio](https://www.rstudio.com/) and follow the instructions [here](http://shiny.rstudio.com/tutorial/lesson1/). 
 
