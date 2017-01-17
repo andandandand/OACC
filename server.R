@@ -1,6 +1,7 @@
 
-source("BDM-utils.R")
+
 source("loadGraph.R")
+source("BDM1D.R")
 source("BDM2D.R")
 source("compressionLength.R")
 

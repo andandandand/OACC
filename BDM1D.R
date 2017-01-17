@@ -5,6 +5,14 @@ library(acss)
 maxKnownKs <- read.csv("./maxKnownKs.csv")
 maxKnownKs$X <- NULL
 
+ldData <- read.csv("./logicalDepthsBinaryStrings.csv", 
+                   colClasses = c('character',"numeric"))
+
+colnames(ldData)        <- c('string','ld')
+logicalDepths           <- data.frame(ldData$ld)
+rownames(logicalDepths) <- ldData$string
+
+
 countSymbols <- function(string){
   return(length(table(strsplit(string, NULL))))
 }
@@ -99,8 +107,20 @@ stringBDM <- function (stringsVector, base) {
   
 }
 
+#receives the already splitted vector of input strings
+stringBDMLD <- function (stringsVector, base) {
+  
+  stringCounts <- as.data.frame(table(stringsVector))
+  
+  #stringCounts
+  sum(logicalDepths[as.character(stringCounts$stringsVector), ] * (log2(stringCounts$Freq)+1))
+}
+
 # ## should print 80.12
-# test <- stringBDM(c("000110100111","111001011000"),2)
-# test
+# testBDM <- stringBDM(c("000110100111","111001011000"),2)
+# testBDM
 
-
+# ## should print 1002
+# testLD <- stringBDMLD(c("000110100111","111001011000"),2)
+# testLD
+ 

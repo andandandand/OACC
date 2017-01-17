@@ -22,7 +22,6 @@ shinyUI(
                                     value ="010101010101010101010101010101010101",
                                     width ="800px"),
                           
-                          #tags$head(tags$style("#bdmInputString{font-size: 16px}")),
                           
                           sliderInput(inputId = "blockSize",
                                       label = "Block size",
