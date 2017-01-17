@@ -116,11 +116,14 @@ stringBDMLD <- function (stringsVector, base) {
   sum(logicalDepths[as.character(stringCounts$stringsVector), ] * (log2(stringCounts$Freq)+1))
 }
 
-# ## should print 80.12
+# ## should print 80.12 bits
 # testBDM <- stringBDM(c("000110100111","111001011000"),2)
 # testBDM
 
-# ## should print 1002
+# ## should print 1002 steps
 # testLD <- stringBDMLD(c("000110100111","111001011000"),2)
 # testLD
- 
+
+# ##should print 31 * (log2(3) + 1) = 80.13 steps
+#testLD2 <- stringBDMLD(c("010101010101", "010101010101", "010101010101"),2)
+#testLD2 

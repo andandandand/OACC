@@ -1,4 +1,4 @@
-ldData <- read.csv("logicalDepthsBinaryStrings.csv", 
+ldData <- read.csv("./logicalDepthsBinaryStrings.csv", 
                           colClasses = c('character',"numeric"))
 
  colnames(ldData) <- c('string','ld')
@@ -13,6 +13,8 @@ ldData <- read.csv("logicalDepthsBinaryStrings.csv",
  
  max(logicalDepths$ld)
  
- t <- logicalDepths[c("111001011000","000110100111"),] 
- r <- t * c(1,1)
- r
+ t1 <- logicalDepths[c("111001011000","000110100111"),] 
+ t1
+ 
+ t2 <-logicalDepths[c("010101010101", "010101010101", "010101010101"),] 
+ t2

@@ -1,9 +1,10 @@
 
 
-source("loadGraph.R")
+
 source("BDM1D.R")
 source("BDM2D.R")
 source("compressionLength.R")
+source("loadGraph.R")
 
 shinyServer(function(input, output, session) {
   
@@ -112,7 +113,8 @@ shinyServer(function(input, output, session) {
                                  alphabet = as.numeric(input$ctmAlphabet)))
         if (!is.matrix(z)){
           z <- as.matrix(z)
-          colnames(z) <- paste0(input$funct, ": ", input$ctmAlphabet)
+          colnames(z) <- paste0(input$funct, ": ",
+                                input$ctmAlphabet)
         }
       }
     })
@@ -125,7 +127,8 @@ shinyServer(function(input, output, session) {
     
     input$goButtonBDM1D
     isolate({
-      x <- paste0("Evaluated string = \"", input$bdmInputString, "\"")
+      x <- paste0("Evaluated string = \"", 
+                  input$bdmInputString, "\"")
     })
      x
   })
@@ -138,10 +141,10 @@ shinyServer(function(input, output, session) {
     isolate({
       
       values <- c ()
-    
+      
       if (input$bdmAlphabet == 256){
         
-        # convert UTF-8 strings to binary
+        # convert UTF-8 string to binary
         binString <- getBinString(input$bdmInputString)
         
         values[1] <- paste0(
@@ -151,6 +154,14 @@ shinyServer(function(input, output, session) {
                         offset = input$blockSize -input$blockOverlap),
             base = 2)), 
           " bits")
+              
+        values[2] <- paste0(
+          sprintf("%.4f",stringBDMLD(
+            splitString(binString,
+                        blockSize = input$blockSize, 
+                        offset = (input$blockSize -input$blockOverlap)),
+            base = input$bdmAlphabet)), 
+          " steps")
       }
       else {
       values[1] <- paste0(
@@ -161,24 +172,41 @@ shinyServer(function(input, output, session) {
                                     base = input$bdmAlphabet)), 
                         " bits")
       }
+      
+      if (input$bdmAlphabet == 2){
+      values[2] <- paste0(
+        sprintf("%.4f",stringBDMLD(
+          splitString(input$bdmInputString,
+                      blockSize = input$blockSize, 
+                      offset = input$blockSize -input$blockOverlap),
+          base = input$bdmAlphabet)), 
+        " steps")
+      }
       #entropy
-      values[2] <- paste0(sprintf("%.4f",entropy(input$bdmInputString)), " bit(s)")
+      values[3] <- paste0(sprintf("%.4f",
+                                  entropy(input$bdmInputString)), 
+                          " bit(s)")
       
       #second order entropy
-      values[3] <- paste0(sprintf("%.4f",entropy2(input$bdmInputString)), " bit(s)")
+      values[4] <- paste0(sprintf("%.4f",
+                                  entropy2(input$bdmInputString)),
+                          " bit(s)")
       
       #compression length
-      values[4] <- paste0(compressionLength(input$bdmInputString, "gzip") * 8, " bits")
+      values[5] <- paste0(compressionLength(input$bdmInputString, 
+                                            "gzip") * 8, 
+                          " bits")
       
-      values[5] <- nchar(input$bdmInputString)
-      values[6] <- countSymbols(input$bdmInputString)
-      values[7] <- input$bdmAlphabet
-      values[8] <- input$blockSize
-      values[9] <- input$blockOverlap
+      values[6] <- nchar(input$bdmInputString)
+      values[7] <- countSymbols(input$bdmInputString)
+      values[8] <- input$bdmAlphabet
+      values[9] <- input$blockSize
+      values[10] <- input$blockOverlap
       
-      result <- data.frame(values)
       
-      rownames(result) <- c("BDM", 
+      
+      resultRowNames  <-  c("BDM algorithmic complexity estimation",
+                            "BDM logical depth estimation",
                             "Shannon entropy", 
                             "Second order entropy",
                             "Compression length (using gzip)",
@@ -187,6 +215,15 @@ shinyServer(function(input, output, session) {
                             "# of symbols in CTM alphabet",
                             "Block size",
                             "Block overlap")
+      
+      if (!(input$bdmAlphabet == 2 || input$bdmAlphabet == 256))
+      {
+           values <- values[-2]
+           resultRowNames <- resultRowNames[-2]
+      } 
+    
+      result <- data.frame(values)
+      rownames(result) <- resultRowNames
       
       
     }) 
@@ -264,7 +301,7 @@ shinyServer(function(input, output, session) {
       
       result <- data.frame(values)
       
-      rownames(result) <- c("BDM", 
+      rownames(result) <- c("BDM algorithmic complexity estimation", 
                             "Shannon entropy",
                             "Block entropy",
                             "Compression length (using gzip)",
