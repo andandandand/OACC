@@ -1,10 +1,10 @@
 
 
 
-source("BDM1D.R")
-source("BDM2D.R")
-source("compressionLength.R")
-source("loadGraph.R")
+source("scripts/BDM1D.R")
+source("scripts/BDM2D.R")
+source("scripts/compressionLength.R")
+source("scripts/loadGraph.R")
 
 shinyServer(function(input, output, session) {
   

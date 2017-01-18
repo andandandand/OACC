@@ -1,7 +1,7 @@
 
 
 #load 4 x 4 CTM values
-fourByFourCTM <- read.csv("./K-4x4.csv",
+fourByFourCTM <- read.csv("data/K-4x4.csv",
                           stringsAsFactors=FALSE, 
                           colClasses = 
                             c("character", "numeric"),
@@ -12,7 +12,7 @@ rownames(fourByFourCTM) <- fourByFourCTM$square
 fourByFourCTM$square <- NULL
 
 #load 3 x 3 CTM values
-threeByThreeCTM <- read.csv("./K-3x3.csv",
+threeByThreeCTM <- read.csv("data/K-3x3.csv",
                             stringsAsFactors=FALSE, 
                             colClasses = 
                               c("character", "numeric"),
@@ -26,13 +26,15 @@ threeByThreeCTM$square <- NULL
 ##split matrices in blocks
 require(purrr)
 ind <- function(matDim, blockSize, offset) {
-  Map(`:`, seq(1, matDim-blockSize+1, by = offset), seq(blockSize, matDim, by = offset))
+  Map(`:`, seq(1, matDim-blockSize+1, by = offset), 
+      seq(blockSize, matDim, by = offset))
 }
 
-# this is a helper function that generates subset indexing according to dimension of the 
+# this is a helper function that generates subset indexing
+# according to dimension of the 
 # matrix, the first sequence constructs the starting point of the subset index considering 
-# the offset while the second sequence constructs the ending point of the subset index
-
+# the offset while the second sequence constructs 
+# the ending point of the subset index
 myPartition <- function(mat, blockSize, offset) {
   lapply(cross2(ind(nrow(mat),blockSize,offset), 
                 ind(ncol(mat),blockSize,offset)), 
@@ -85,20 +87,17 @@ bdm2D <- function(mat, blockSize, offset){
   return(bdm)
 }
 
-# 
+# tests
 # set.seed(42)
-# m99 <- apply(matrix(0, 9, 9), c(1,2), function(x) sample(c(0,1),1)) 
+# m99 <- apply(matrix(0, 9, 9), c(1,2), function(x) sample(c(0,1),1))
 # m99
 # 
 # testResult1 <- bdm2D(m88, 4, 4)
 # testResult1
 # 
-# testResul2 <- bdm2D(m99, 3, 3)
-# testResul2
+# 
+# testResult2 <- bdm2D(m99, 3, 3)
+# testResult2
 
-#test
-library(acss)
-set.seed(42)
-m88 <- apply(matrix(0, 8, 8), c(1,2), function(x) sample(c(0,1),1)) 
-m88
-blockEntropy(m88, 4, 4)
+
+

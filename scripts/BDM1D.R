@@ -2,10 +2,10 @@
 
 library(acss)
 
-maxKnownKs <- read.csv("./maxKnownKs.csv")
+maxKnownKs <- read.csv("data/maxKnownKs.csv")
 maxKnownKs$X <- NULL
 
-ldData <- read.csv("./logicalDepthsBinaryStrings.csv", 
+ldData <- read.csv("data/logicalDepthsBinaryStrings.csv", 
                    colClasses = c('character',"numeric"))
 
 colnames(ldData)        <- c('string','ld')
@@ -117,8 +117,8 @@ stringBDMLD <- function (stringsVector, base) {
 }
 
 # ## should print 80.12 bits
-# testBDM <- stringBDM(c("000110100111","111001011000"),2)
-# testBDM
+#testBDM <- stringBDM(c("000110100111","111001011000"),2)
+#testBDM
 
 # ## should print 1002 steps
 # testLD <- stringBDMLD(c("000110100111","111001011000"),2)
