@@ -18,5 +18,5 @@ loadGraph <- function(dataPath,
   loadedMat
 }
 
-graph <- loadGraph("m88.csv", sep = ",", quote = '"' )
-graph
+#graph <- loadGraph("m88.csv", sep = ",", quote = '"' )
+#graph

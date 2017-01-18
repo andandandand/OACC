@@ -236,7 +236,7 @@ shinyServer(function(input, output, session) {
     
     inFile <- input$file1
     if(input$goButtonBDM2D == 0 || is.null(inFile$datapath)){
-      graph <- loadGraph("m88.csv", sep = ",", quote = '"' )
+      graph <- loadGraph("data/m88.csv", sep = ",", quote = '"' )
       return (graph)
     }
     
