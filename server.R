@@ -107,12 +107,41 @@ shinyServer(function(input, output, session) {
         
       }
       
+      #call acss's CTM
+      else if(input$funct == "acss"){
+        
+        z <- do.call(acss, 
+                     args = list(string = unlist(strsplit(input$ctmInputStrings, " ")),
+                                 alphabet = as.numeric(input$ctmAlphabet)))
+        
+        if (input$ctmAlphabet == "2"){
+         colnames(z) <- c("K(5, 2)", "D(5, 2)")
+        }
+        else if (input$ctmAlphabet == "4"){
+          colnames(z) <- c("K(4, 4)", "D(4, 4)")
+        }
+        else if (input$ctmAlphabet == "5"){
+          colnames(z) <- c("K(4, 5)", "D(4, 5)")
+        }
+        else if (input$ctmAlphabet == "6"){
+          colnames(z) <- c("K(4, 6)", "D(4, 6)")
+        }
+        else if (input$ctmAlphabet == "9"){
+          colnames(z) <- c("K(4, 9)", "D(4, 9)")
+        }
+        
+        
+      }
+      
+      #call likelihood of production
       else{
         z <- do.call(input$funct, 
                      args = list(string = unlist(strsplit(input$ctmInputStrings, " ")),
                                  alphabet = as.numeric(input$ctmAlphabet)))
         if (!is.matrix(z)){
           z <- as.matrix(z)
+          
+          
           colnames(z) <- paste0(input$funct, ": ",
                                 input$ctmAlphabet)
         }
@@ -165,11 +194,11 @@ shinyServer(function(input, output, session) {
       }
       else {
       values[1] <- paste0(
-                        sprintf("%.4f",stringBDM(
-                        splitString(input$bdmInputString,
-                                      blockSize = input$blockSize, 
-                                      offset = input$blockSize -input$blockOverlap),
-                                    base = input$bdmAlphabet)), 
+                    sprintf("%.4f",stringBDM(
+                      splitString(input$bdmInputString,
+                                  blockSize = input$blockSize, 
+                                  offset = input$blockSize -input$blockOverlap),
+                                  base = input$bdmAlphabet)), 
                         " bits")
       }
       

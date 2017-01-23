@@ -78,8 +78,6 @@ shinyUI(
                           
                           actionButton("goButtonBDM2D", "Evaluate")
                           
-                                    
-                          
                         ) #end wellPanel BDM 2D
                         , style="font-size: 115%")
                ), #end tabPanel BDM 2D
@@ -105,7 +103,11 @@ shinyUI(
                           radioButtons(inputId = "ctmAlphabet",
                                        label = "Alphabet size", 
                                        inline = TRUE,
-                                       choices = list("2" = 2, "4" = 4, "5" = 5, "6" = 6, "9" = 9),
+                                       choices = list("2" = 2, 
+                                                      "4" = 4,
+                                                      "5" = 5, 
+                                                      "6" = 6, 
+                                                      "9" = 9),
                                        selected = 4), 
                           
                           selectInput(#inputId="shortStringsEvalFunction", #"argument is not interpretable as logical" error
@@ -156,20 +158,22 @@ shinyUI(
                          hr(),
                          
                          div(p("$$\\textit{BDM} =
-                              \\sum_{i=1}^{n} \\textit{CTM}(\\textit{block}_{i})
+                              \\sum_{i=1}^{n} \\textit{K}(\\textit{block}_{i})
                                +\\textit{log}_{2}(|\\textit{block}_{i}|)$$"),
                              style="font-size: 120%",
                              align="center"), 
                          
                          hr(),
                          
-                        div(p("Strings that don't appear in the 
-                              \\(D_{\\textit{alphabetSize}}\\) distribution have
-                              their \\(\\textit{CTM}\\) value estimated as"),
-                            style ="font-size: 110%;", align = "center"),
+                         div(p("Strings that don't appear in the
+                            \\(D(\\#\\textit{of states}, \\#\\textit{ of symbols})\\) 
+                               distribution have their
+                               \\(\\textit{K}\\) value estimated as"),
+                             style="font-size:110%"),
                          
-                         div(p("\\( \\textit{Max}(\\textit{CTM}_{\\textit{alphabetSize}}) + 1 \\)"),
-                             style="font-size: 120%", align="center" )
+                         div(p("$$ \\textit{Max}(K(\\#\\textit{ of states}, \\#\\textit{ of symbols}))
+                               + 1 $$"), 
+                             style="font-size:110%")
         ), ##end BDM 1D tab
         
         conditionalPanel(condition="input.conditionedPanels==2",
@@ -186,7 +190,7 @@ shinyUI(
                          hr(),
                          
                          div(p("$$BDM =
-                              \\sum_{i=1}^{n} CTM(block_{i})+log_{2}(|block_{i}|)$$"),
+                              \\sum_{i=1}^{n} K(block_{i})+log_{2}(|block_{i}|)$$"),
                              style ="font-size: 120%")
         ), ##end BDM 2D tab
         
@@ -199,36 +203,36 @@ shinyUI(
                              align = "center"), 
                          hr(),
                          
-                  conditionalPanel(condition = "input.funct == 'acss'", #"1==1",#"input.plotType == 'hist'",
+                  conditionalPanel(condition = "input.funct == 'acss'",
                                           
-                         div(p("$$\\textit{CTM} = K_{\\textit{alphabetSize}} =
-                              -log_{2}(D_{\\textit{alphabetSize}})$$"), 
+                         div(p("$$K(\\#\\textit{ of states}, \\#\\textit{ of symbols}) =
+                              -log_{2}(D(\\#\\textit{of states}, \\textit{# of symbols})$$"), 
                              style = "font-size: 120%"),
                          
                          hr(),
                          
-                        div(p("\\(CTM~\\)\\(K_{\\textit{alphabetSize}}\\)
+                        div(p("\\(\\textit{}~\\)\\(K(\\#\\textit{ of states}, \\#\\textit{ of symbols})\\)
                            indicates the estimated Kolmogorov complexity of 
                            the string by the Coding Theorem Method."),
                             style="font-size:110%"),
                           
                          hr(),
                          
-                         div(p("\\(D_{\\textit{alphabetSize}}\\) indicates the 
+                         div(p("\\(D(\\#\\textit{of states}, \\#\\textit{ of symbols})\\) indicates the 
                           estimated algorithmic probability, 
                           which is the output frequency of the string 
-                           by small Turing machines with the same alphabet size."),
+                           by Turing machines with the same alphabet."),
                              style="font-size:110%"),
                          
                          hr(),
                          
                          div(p("Strings that don't appear in the
-                            \\(D_{\\textit{alphabetSize}}\\) 
+                            \\(D(\\#\\textit{of states}, \\#\\textit{ of symbols})\\) 
                            distribution have their
-                           \\(\\textit{CTM}\\) value estimated as"),
+                           \\(\\textit{K}\\) value estimated as"),
                              style="font-size:110%"),
                          
-                         div(p("$$ \\textit{Max}(\\textit{CTM}_{\\textit{alphabetSize}})
+                         div(p("$$ \\textit{Max}(K(\\#\\textit{ of states}, \\#\\textit{ of symbols}))
                            + 1 $$"), 
                              style="font-size:110%"),
                          hr(),
