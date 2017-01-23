@@ -93,7 +93,7 @@ shinyUI(
                           
                           textInput(inputId = "ctmInputStrings",
                                     label = "Strings to evaluate",
-                                    value ="AAAAAAAAAAAA ATATATATATAT ATGCCGGCCTAA",
+                                    value ="AAAAAAAAAAAA ATATATATATAT ATTGCCGGCCTA",
                                     width = "800px")
                           
                           ,
