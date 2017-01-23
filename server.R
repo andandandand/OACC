@@ -119,7 +119,7 @@ shinyServer(function(input, output, session) {
       }
     })
     z
-  }, digits = 16)
+  }, rownames = TRUE, digits = 16)
   
   #### BDM 1D Tab
   

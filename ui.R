@@ -93,7 +93,7 @@ shinyUI(
                           
                           textInput(inputId = "ctmInputStrings",
                                     label = "Strings to evaluate",
-                                    value ="AAAAAAAAAA ATATATATAT ATGCCGGCCT",
+                                    value ="AAAAAAAAAA ATATATATATAT ATGCCGGCCT",
                                     width = "800px")
                           
                           ,
@@ -108,7 +108,8 @@ shinyUI(
                                        choices = list("2" = 2, "4" = 4, "5" = 5, "6" = 6, "9" = 9),
                                        selected = 4), 
                           
-                          selectInput("funct", 
+                          selectInput(#inputId="shortStringsEvalFunction", #"argument is not interpretable as logical" error
+                                      inputId="funct", 
                                       label = "Function used to evaluate the strings",
                                       choices = list("CTM Kolmogorov complexity estimated by algorithmic probability " = "acss",
                                                      "Shannon entropy" = "entropy",
@@ -198,6 +199,8 @@ shinyUI(
                              align = "center"), 
                          hr(),
                          
+                  conditionalPanel(condition = "input.funct == 'acss'", #"1==1",#"input.plotType == 'hist'",
+                                          
                          div(p("$$\\textit{CTM} = K_{\\textit{alphabetSize}} =
                               -log_{2}(D_{\\textit{alphabetSize}})$$"), 
                              style = "font-size: 120%"),
@@ -235,7 +238,8 @@ shinyUI(
                          a(href="https://cran.r-project.org/web/packages/acss/acss.pdf", 
                            "documentation of the ACSS package @ CRAN.")),
                          style="font-size:110%", align="center")
-                         
+                  )#end conditionalPanel CTM chosen 
+                  
                         ) ##end CTM tab
         
         ) ## end mainPanel 
