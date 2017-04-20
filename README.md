@@ -1,5 +1,5 @@
 # The Online Algorithmic Complexity Calculator v2.5
-##R Shiny App
+## R Shiny App
 
 
 [R Shiny](http://shiny.rstudio.com/) code for the [Online Algorithmic Complexity Calculator](http://complexitycalculator.com/) version 2.5 by the [Algorithmic Nature Group](http://algorithmicnaturelab.org/). 
