@@ -1,8 +1,8 @@
-# The Online Algorithmic Complexity Calculator v2.5
+# The Online Algorithmic Complexity Calculator v3.0
 ## R Shiny App
 
 
-[R Shiny](http://shiny.rstudio.com/) code for the [Online Algorithmic Complexity Calculator](http://complexitycalculator.com/) version 2.5 by the [Algorithmic Nature Group](http://algorithmicnaturelab.org/). 
+[R Shiny](http://shiny.rstudio.com/) code for the [Online Algorithmic Complexity Calculator](http://complexitycalculator.com/) version 3.0 by the [Algorithmic Nature Group](http://algorithmicnaturelab.org/) and the [Algorithmic Dynamics Lab](http://www.algorithmicdynamics.net/). 
 
 To run this app locally, download [R Studio](https://www.rstudio.com/) and follow the instructions [here](http://shiny.rstudio.com/tutorial/lesson1/). 
 
@@ -13,7 +13,7 @@ The Coding Theorem Method and the Block Decomposition Method are also described 
 
 If you make use of results from this calculator, please make sure to visit [How To Cite](http://complexitycalculator.com/HowToCite.html).
 
-This app extends work by Henrik Singmann and uses the [acss package](https://cran.r-project.org/web/packages/acss/index.html) available at CRAN.
+This app uses the [acss package](https://cran.r-project.org/web/packages/acss/index.html) available at CRAN, and maintained by Henrik Singmann.
 
 ## License
 
