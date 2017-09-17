@@ -13,7 +13,7 @@ The Coding Theorem Method and the Block Decomposition Method are also described 
 
 If you make use of results from this calculator, please make sure to visit [How To Cite](http://complexitycalculator.com/HowToCite.html).
 
-This app uses the [acss package](https://cran.r-project.org/web/packages/acss/index.html) available at CRAN and maintained by Henrik Singmann.
+This app uses the [acss package](https://cran.r-project.org/web/packages/acss/index.html) available at CRAN, and maintained by Henrik Singmann.
 
 ## License
 
