@@ -128,8 +128,61 @@ shinyUI(
                           
                           actionButton("goButtonCTM", "Evaluate")
                           
-                        )), # end wellPanel, 
-                        style="font-size:115%"),
+                        )), # end wellPanel "For short strings", 
+                        style="font-size:115%"), #end tabPanel "For short strings"
+               
+               tabPanel("Network perturbation", 
+                        value = 4, 
+                        h3("Perturbation Analysis of Unweighted Networks"),
+                        div(wellPanel(
+                          
+                          fileInput(inputId = "file2",
+                                    label = "Choose a CSV file",
+                                    accept = c('text/comma-separated-values',
+                                               'text/plain',
+                                               'text/csv',
+                                               '.csv')
+                                    ),
+                          
+                          selectInput(inputId = "vertexToDelete",
+                                      label = "Node to delete",
+                                      choices = ""), # choices filled in by server
+                          
+                          actionButton(inputId = "goButtonDeleteVertex",
+                                       label = "Delete node"),
+                          
+                          span(textOutput(outputId = "cantDeleteVertex"),
+                               style = "color:red"),
+                          
+                          hr(),
+                          
+                          selectInput(inputId = "edgeToDelete",
+                                      label   = "Edge to delete",
+                                      choices = ""), # choices filled in by server
+                          
+                          actionButton(inputId = "goButtonDeleteEdge",
+                                       label   = "Delete link"),
+                          
+                          
+                          span(textOutput(outputId = "cantDeleteLink"), 
+                               style="color:red"),
+                          
+                          hr(),
+                          
+                          radioButtons(inputId = "printTable",
+                                       label = h4("Perturbation Table"),
+                                       choices = list("Nodes" = "vertices",
+                                                      "Links" = "edges"),
+                                       selected = "vertices"),
+                          
+                          hr(),
+                          
+                          downloadButton('report', # name of downloadHandler in server
+                                         'Download report')
+                          
+                        )),
+                        style = "font-size:115%"), # end tabPanel "Network Perturbation"
+               
                id = "conditionedPanels"
              )
       ),
@@ -242,9 +295,15 @@ shinyUI(
                          a(href="https://cran.r-project.org/web/packages/acss/acss.pdf", 
                            "documentation of the ACSS package @ CRAN.")),
                          style="font-size:110%", align="center")
-                  )#end conditionalPanel CTM chosen 
+                  )
                   
-                        ) ##end CTM tab
+              ), ## #end conditionalPanel CTM chosen 
+        
+        conditionalPanel(condition ="input.conditionedPanels==4", 
+                         br(),
+                         plotOutput("graphPlot"),
+                         tableOutput("perturbationTable")
+                         )
         
         ) ## end mainPanel 
       

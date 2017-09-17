@@ -1,0 +1,34 @@
+---
+title: "Perturbation Analysis Report"
+output: html_document
+params:
+  g: NA #default value 
+  pv: NA
+  pe: NA
+---
+
+```{r eval = FALSE, echo = FALSE}
+# For PDF output, change the header to have "output: pdf_document".
+#
+# Note that due to an issue in rmarkdown, the default value of a parameter in
+# the header cannot be `NULL`, so I used a default of `NA` for the default value
+# of `n`.
+require(igraph)
+require(knitr)
+```
+
+```{r echo = FALSE}
+
+coords <- layout_(params$g, as_star())
+
+plot(params$g, 
+     layout = coords, edge.arrow.size = 0.4,
+     vertex.size = 25, vertex.label.family = "Arial Black")
+
+
+knitr::kable(params$pv, caption = "Vertex perturbations", 
+             row.names = FALSE) 
+
+knitr::kable(params$pe, caption ="Edge perturbations")
+
+```
