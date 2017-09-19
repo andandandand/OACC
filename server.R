@@ -448,7 +448,7 @@ shinyServer(function(input, output, session) {
       
     } else {
       
-      g <- loadGraph(inFile$datapath)
+      g <- loadGraphPA(inFile$datapath)
       my$pv <- calculatePerturbationByVertexDeletion(g, 4, 1)
       my$pe <- calculatePerturbationByEdgeDeletion(g, 4, 1)
       my$g  <- setGraphColors(g, my$pv, my$pe)
