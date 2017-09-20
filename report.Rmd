@@ -2,9 +2,12 @@
 title: "Perturbation Analysis Report"
 output: html_document
 params:
-  g: NA #default value 
-  pv: NA
-  pe: NA
+  perturbationCounter: NA
+  graphHistory: !r list()
+  pvHistory: !r list()
+  peHistory: !r list()
+  delEventHistory: !r list()
+ 
 ---
 
 ```{r eval = FALSE, echo = FALSE}
@@ -15,20 +18,42 @@ params:
 # of `n`.
 require(igraph)
 require(knitr)
+require(xtable)
 ```
 
-```{r echo = FALSE}
 
-coords <- layout_(params$g, as_star())
 
-plot(params$g, 
-     layout = coords, edge.arrow.size = 0.4,
+```{r results= 'asis', echo = FALSE}
+
+# https://stackoverflow.com/questions/28313600/r-knitr-print-in-a-loop
+# https://github.com/yihui/knitr/issues/886
+
+
+#https://stackoverflow.com/questions/32418860/output-markdown-in-r-code-chunk
+for (i in 1:params$perturbationCounter){
+  
+  cat('\n')
+  
+  cat(paste0("### ",params$delEventHistory[[i]]))
+  
+  cat('\n')
+  
+  coords <- layout_(params$graphHistory[[i]], as_star())
+  
+  plot(params$graphHistory[[i]], layout = coords, edge.arrow.size = 0.4,
      vertex.size = 25, vertex.label.family = "Arial Black")
 
+  cat('\n')
+  
+  print(knitr::kable(params$pvHistory[[i]], caption = "Possible node perturbations", 
+             row.names = FALSE))
+   cat('\n')
 
-knitr::kable(params$pv, caption = "Vertex perturbations", 
-             row.names = FALSE) 
-
-knitr::kable(params$pe, caption ="Edge perturbations")
-
+  print(knitr::kable(params$peHistory[[i]], caption = "Possible link perturbations", 
+             row.names = FALSE))
+  
+   cat('\n')
+  
+  }
 ```
+

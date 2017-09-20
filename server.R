@@ -410,13 +410,21 @@ shinyServer(function(input, output, session) {
   
   sizeOfHistory <- vcount(g) + ecount(g)
 
-  graphHistory    <- vector("list", sizeOfHistory)
-  ptHistory       <- vector("list", sizeOfHistory)
-  pvHistory       <- vector("list", sizeOfHistory)
-  peHistory       <- vector("list", sizeOfHistory)
+  graphHistory    <- list()
+
+  pvHistory       <- list()
+  
+  peHistory       <- list()
+  
   delEventHistory <- vector("list", sizeOfHistory)
   
-  perturbationCounter <- as.integer(0)
+  graphHistory[[1]]    <- g
+  pvHistory[[1]]       <- relabelVertexTable(pv)
+  peHistory[[1]]       <- relabelEdgeTable(pe)
+  delEventHistory[[1]] <- "Initial state of the network"
+  
+  #starts with 1 even though the network hasn't been changed at the start
+  perturbationCounter <- as.integer(1)
     
   my <- reactiveValues(g = g,
                        pv = pv,
@@ -445,7 +453,6 @@ shinyServer(function(input, output, session) {
     if (is.null(inFile$datapath)){
       
       
-      
     } else {
       
       g <- loadGraphPA(inFile$datapath)
@@ -454,6 +461,10 @@ shinyServer(function(input, output, session) {
       my$g  <- setGraphColors(g, my$pv, my$pe)
       
       my$sizeOfHistory <- vcount(my$g) + ecount(my$g)
+   
+      my$perturbationCounter <- as.integer(1)
+      
+      #todo: check if this vector("list", my$sizeOfHistory) works with list() in Report.Rmd
       graphHistory     <- vector("list", my$sizeOfHistory)
       ptHistory        <- vector("list", my$sizeOfHistory)
       pvHistory        <- vector("list", my$sizeOfHistory)
@@ -469,11 +480,25 @@ shinyServer(function(input, output, session) {
     
     if(vcount(my$g) > 5){
       
+      my$perturbationCounter <- my$perturbationCounter + 1
+      
+      
+      
       my$g <- delete_vertices(my$g,
                               input$vertexToDelete)
       
       my$pv <- calculatePerturbationByVertexDeletion(my$g, 4, 1)
       my$pe <- calculatePerturbationByEdgeDeletion(my$g, 4, 1)
+      
+      my$g  <- setGraphColors(my$g, my$pv, my$pe)
+      
+      my$graphHistory[[my$perturbationCounter]] <- my$g
+      my$pvHistory[[my$perturbationCounter]]    <- relabelVertexTable(my$pv)
+      my$peHistory[[my$perturbationCounter]]    <- relabelEdgeTable(my$pe)
+      
+      my$delEventHistory[[my$perturbationCounter]] <- paste0("Deletion of node ", 
+                                                             input$vertexToDelete)    
+  
       
     }
     
@@ -498,6 +523,18 @@ shinyServer(function(input, output, session) {
       
       my$pv <- calculatePerturbationByVertexDeletion(my$g, 4, 1)
       my$pe <- calculatePerturbationByEdgeDeletion(my$g, 4, 1)
+      
+      my$g  <- setGraphColors(my$g, my$pv, my$pe)
+      
+      my$perturbationCounter <- my$perturbationCounter + 1
+      
+      my$graphHistory[[my$perturbationCounter]] <- my$g
+      my$pvHistory[[my$perturbationCounter]]    <- relabelVertexTable(my$pv)
+      my$peHistory[[my$perturbationCounter]]    <- relabelEdgeTable(my$pe)
+      
+      
+      my$delEventHistory[[my$perturbationCounter]] <- paste0("Deletion of link ", 
+                                                             input$edgeToDelete) 
       
     } else {
       
@@ -557,9 +594,11 @@ shinyServer(function(input, output, session) {
       printET <- relabelEdgeTable(my$pe)
 
       
-      params <- list(g = printG,
-                     pv = printVT,
-                     pe = printET)
+      params <- list(graphHistory = my$graphHistory,
+                     pvHistory = my$pvHistory,
+                     peHistory = my$peHistory,
+                     perturbationCounter = my$perturbationCounter,
+                     delEventHistory = my$delEventHistory)
       
       rmarkdown::render(tempReport, 
                         output_file = file,
