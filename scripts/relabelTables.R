@@ -7,13 +7,13 @@ relabelVertexTable <- function(oldVertexTable){
   
   #print(vertexTable)
   
-  vertexTable$bdmIncrease[vertexTable$bdmIncrease] <- "positive"
-  vertexTable$bdmIncrease[vertexTable$bdmIncrease == FALSE] <- "negative"
+  vertexTable$bdmIncrease[vertexTable$bdmIncrease] <- "negative"
+  vertexTable$bdmIncrease[vertexTable$bdmIncrease == FALSE] <- "positive"
   
   colnames(vertexTable) <- c("Node label",
                              "BDM of graph after node knockout",
                              "BDM diff",
-                             "Information value",
+                             "Information shift",
                              "Perturbation rank")
   
   return(vertexTable)
@@ -26,13 +26,13 @@ relabelEdgeTable <- function(oldEdgeTable){
   
   edgeTable$color <- NULL
   
-  edgeTable$bdmIncrease[edgeTable$bdmIncrease] <- "positive"
-  edgeTable$bdmIncrease[edgeTable$bdmIncrease == FALSE] <- "negative"
+  edgeTable$bdmIncrease[edgeTable$bdmIncrease] <- "negative"
+  edgeTable$bdmIncrease[edgeTable$bdmIncrease == FALSE] <- "positive"
   colnames(edgeTable) <- c("Link origin",
                            "Link end",
                            "BDM value after link knockout",
                            "BDM diff",
-                           "Information value",
+                           "Information shift",
                            "Perturbation rank")
   return (edgeTable)
 }

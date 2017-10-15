@@ -133,7 +133,7 @@ shinyUI(
                
                tabPanel("Network perturbation", 
                         value = 4, 
-                        h3("Perturbation Analysis of Unweighted Networks"),
+                        h3("Algorithmic Perturbation Analysis of Unweighted Networks"),
                         div(wellPanel(
                           
                           fileInput(inputId = "file2",
