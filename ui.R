@@ -51,7 +51,7 @@ shinyUI(
                         
                ), 
                
-               tabPanel("For binary arrays",
+               tabPanel("For binary arrays/adjacency matrices",
                         value = 2,
                         h3(
                           "Block Decomposition Method for Unweighted Adjacency Matrices"), 
