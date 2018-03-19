@@ -158,7 +158,6 @@ shinyServer(function(input, output, session) {
   }, rownames = TRUE, digits = 16)
   
   #### BDM 1D Tab
-  
   output$evaluatedString <- renderText({
     
     input$goButtonBDM1D
