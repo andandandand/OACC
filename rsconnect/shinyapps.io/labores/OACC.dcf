@@ -1,10 +1,13 @@
 name: OACC
 title: OACC
+username:
 account: labores
 server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
 appId: 216483
-bundleId: 1027699
+bundleId: 1276330
 url: https://labores.shinyapps.io/OACC/
-when: 1508087612.21487
+when: 1521469759.22384
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: test
