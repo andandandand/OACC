@@ -1,6 +1,4 @@
 
-require("igraph")
-source("BDM2D.R")
 
 
 calculatePerturbationByVertexDeletion <- function(origGraph, blockSize, offset){

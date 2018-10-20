@@ -592,7 +592,6 @@ shinyServer(function(input, output, session) {
       
       printET <- relabelEdgeTable(my$pe)
 
-      
       params <- list(graphHistory = my$graphHistory,
                      pvHistory = my$pvHistory,
                      peHistory = my$peHistory,

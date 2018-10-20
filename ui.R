@@ -2,9 +2,7 @@ library(shiny)
 
 shinyUI(
   fluidPage(
-    
-    #titlePanel("The Online Algorithmic Complexity Calculator"),
-    
+        
     sidebarLayout(
       
       column(6,
