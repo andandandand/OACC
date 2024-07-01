@@ -23,9 +23,7 @@ This app uses the [acss package](https://cran.r-project.org/web/packages/acss/in
 
 [Antonio Rueda-Toicen](http://www.digital-spaceti.me/)
 
-antonio.rueda.toicen " at "  algorithmicnaturelab (-dot-) org
-
-#### [www.complexitycalculator.com](www.complexity-calculator.com)
+#### [www.complexity-calculator.com](www.complexity-calculator.com)
 
 #### [www.algorithmicnaturelab.org](www.algorithmicnaturelab.org)
 
